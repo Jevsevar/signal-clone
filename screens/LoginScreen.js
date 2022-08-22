@@ -3,11 +3,14 @@ import React, { useState } from "react";
 import { Button, Input, Image } from "react-native-elements";
 import { StatusBar } from "expo-status-bar";
 
-const LoginScreen = () => {
+export default function LoginScreen({ navigation }) {
   const { email, setEmail } = useState("");
   const { password, setPassword } = useState("");
 
   const signIn = () => {};
+  const register = () => {
+    navigation.navigate("Register");
+  };
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -16,7 +19,7 @@ const LoginScreen = () => {
         source={{
           uri: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Signal_Blue_Icon.png",
         }}
-        style={{ width: 200, height: 200 }}
+        style={styles.image}
       />
       <View style={styles.inputContainer}>
         <Input
@@ -36,13 +39,16 @@ const LoginScreen = () => {
       </View>
 
       <Button containerStyle={styles.button} onPress={signIn} title="Login" />
-      <Button containerStyle={styles.button} type="outline" title="Register" />
+      <Button
+        containerStyle={styles.button}
+        onPress={register}
+        type="outline"
+        title="Register"
+      />
       <View style={{ height: 150 }} />
     </KeyboardAvoidingView>
   );
-};
-
-export default LoginScreen;
+}
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -58,5 +64,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 10,
     backgroundColor: "white",
+  },
+  image: {
+    width: 200,
+    height: 200,
+    borderRadius: 15,
   },
 });
