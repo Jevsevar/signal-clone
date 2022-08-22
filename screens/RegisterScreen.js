@@ -17,12 +17,6 @@ export default function RegisterScreen({ navigation }) {
     });
   }, [navigation]);
 
-  const signOut = () => {
-    auth.signOut();
-    navigation.navigate("Login");
-    alert("Signed out");
-  };
-
   const register = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((authUser) => {
