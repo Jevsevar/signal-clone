@@ -2,12 +2,14 @@ import { View, StyleSheet, KeyboardAvoidingView } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { Button, Input, Text } from "react-native-elements";
 import { StatusBar } from "expo-status-bar";
+import { auth } from "../firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 export default function RegisterScreen({ navigation }) {
-  const { name, setName } = useState("");
-  const { email, setEmail } = useState("");
-  const { password, setPassword } = useState("");
-  const { imageUrl, setImageUrl } = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -15,8 +17,23 @@ export default function RegisterScreen({ navigation }) {
     });
   }, [navigation]);
 
-  const register = () => {
+  const signOut = () => {
+    auth.signOut();
     navigation.navigate("Login");
+    alert("Signed out");
+  };
+
+  const register = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((authUser) => {
+        updateProfile(authUser.user, {
+          displayName: name,
+          photoURL: imageUrl || "https://www.fillmurray.com/g/200/200",
+        });
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   return (
@@ -32,7 +49,9 @@ export default function RegisterScreen({ navigation }) {
           autoFocus
           type="name"
           value={name}
-          onChangeText={(text) => setName(text)}
+          onChangeText={(text) => {
+            setName(text);
+          }}
         />
         <Input
           placeholder="Email"

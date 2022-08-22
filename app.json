@@ -4,6 +4,9 @@
     "slug": "signal-clone",
     "version": "1.0.0",
     "orientation": "portrait",
+    "packagerOpts": {
+      "sourceExts": ["cjs"]
+    },
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -14,9 +17,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
